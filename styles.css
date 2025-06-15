@@ -1,0 +1,70 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #49c5eb;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  
+}
+
+h1 {
+  text-align: center;
+  color: #444;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+form input, form select, form button {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+}
+
+ul#taskList {
+  list-style-type: none;
+  padding: 0;
+}
+
+li.task-item {
+  background: #eef;
+  margin-bottom: 10px;
+  padding: 15px;
+  border-left: 5px solid #2196f3;
+  border-radius: 5px;
+  position: relative;
+}
+
+.task-item.completed {
+  text-decoration: line-through;
+  background: #d3ffd3;
+}
+
+.task-item span {
+  display: block;
+  margin-top: 5px;
+  font-size: 13px;
+  color: #666;
+}
+
+.task-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.task-actions button {
+  margin-left: 5px;
+}

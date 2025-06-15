@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tax Task Manager</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🧾 Tax Task Manager</h1>
+    <form id="taskForm">
+      <input type="text" id="taskName" placeholder="Enter tax task..." required />
+      <input type="date" id="dueDate" required />
+      <select id="category">
+        <option value="Assignment">Assignment</option>
+        <option value="Exam">Exam</option>
+        <option value="Lab">Lab</option>
+        <option value="Project">Project</option>
+        <option value="Personal">Personal</option>
+        <option value="GST">GST</option>
+        <option value="Submission">Property Tax</option>
+        <option value="Other">Other</option>
+      </select>
+      <select id="priority">
+        <option value="Low">Low</option>
+        <option value="Medium" selected>Medium</option>
+        <option value="High">High</option>
+      </select>
+      <button type="submit">Add Task</button>
+    </form>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    const taskForm = document.getElementById('taskForm');
+const taskList = document.getElementById('taskList');
+
+let tasks = [];
+
+taskForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+  const name = document.getElementById('taskName').value;
+  const dueDate = document.getElementById('dueDate').value;
+  const category = document.getElementById('category').value;
+  const priority = document.getElementById('priority').value;
+
+  const task = {
+    id: Date.now(),
+    name,
+    dueDate,
+    category,
+    priority,
+    completed: false,
+  };
+
+  tasks.push(task);
+  renderTasks();
+  taskForm.reset();
+});
+
+function renderTasks() {
+  taskList.innerHTML = '';
+
+  tasks.forEach(task => {
+    const li = document.createElement('li');
+    li.className = 'task-item' + (task.completed ? ' completed' : '');
+    li.innerHTML = `
+      <strong>${task.name}</strong>
+      <span>Due: ${task.dueDate} | Category: ${task.category} | Priority: ${task.priority}</span>
+      <div class="task-actions">
+        <button onclick="toggleComplete(${task.id})">✅</button>
+        <button onclick="editTask(${task.id})">✏️</button>
+        <button onclick="deleteTask(${task.id})">🗑️</button>
+      </div>
+    `;
+    taskList.appendChild(li);
+  });
+}
+
+function toggleComplete(id) {
+  tasks = tasks.map(task =>
+    task.id === id ? { ...task, completed: !task.completed } : task
+  );
+  renderTasks();
+}
+
+function deleteTask(id) {
+  tasks = tasks.filter(task => task.id !== id);
+  renderTasks();
+}
+
+function editTask(id) {
+  const task = tasks.find(t => t.id === id);
+  const newName = prompt('Edit Task Name:', task.name);
+  const newDate = prompt('Edit Due Date (YYYY-MM-DD):', task.dueDate);
+  const newCategory = prompt('Edit Category:', task.category);
+  const newPriority = prompt('Edit Priority:', task.priority);
+
+  if (newName && newDate) {
+    task.name = newName;
+    task.dueDate = newDate;
+    task.category = newCategory;
+    task.priority = newPriority;
+    renderTasks();
+  }
+}
+
+  </script>
+</body>
+</html>
